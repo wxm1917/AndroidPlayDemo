@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">OpenAPIDemo</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="channel_list">爱奇艺频道列表</string>
+    <string name="recommend_title">爱奇艺推荐</string>
+    <string name="network_error">网络错误，请求数据失败</string>
+    <string name="play_count">播放量:%1$s</string>
+    <string name="sns_score">评分:%1$s</string>
+</resources>

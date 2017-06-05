@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidPlayDemo.iml" filepath="$PROJECT_DIR$/AndroidPlayDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apilib/apilib.iml" filepath="$PROJECT_DIR$/apilib/apilib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+    </modules>
+  </component>
+</project>
