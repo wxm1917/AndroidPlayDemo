@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical" >
+
+    <!-- 普通底部导航 -->
+
+    <LinearLayout
+        android:id="@+id/main_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/re_recommend"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp" >
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/ib_recommend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="#ffffff"
+                    android:focusable="false"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tab_recommend" />
+
+                <TextView
+                    android:id="@+id/tv_recommend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ib_recommend"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/bottom_recommend"
+                    android:textColor="#9A9A9A"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/unread_recommend_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/aii"
+                    android:gravity="center"
+                    android:text="7"
+                    android:visibility="gone"
+                    android:layout_marginRight="8dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/re_ar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp" >
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/ib_ar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="#ffffff"
+                    android:focusable="false"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ar" />
+
+                <TextView
+                    android:id="@+id/tv_ar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ib_ar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/bottom_ar"
+                    android:textColor="#9A9A9A"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/unread_ar_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/aii"
+                    android:gravity="center"
+                    android:layout_marginRight="8dp"
+                    android:text="7"
+                    android:visibility="gone"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/re_notification"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp" >
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/ib_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="#ffffff"
+                    android:focusable="false"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tab_notification" />
+
+                <TextView
+                    android:id="@+id/tv_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ib_notification"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/bottom_notification"
+                    android:textColor="#9A9A9A"
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/unread_notification_number"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/aii"
+                    android:gravity="center"
+                    android:text=""
+                    android:visibility="visible"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
