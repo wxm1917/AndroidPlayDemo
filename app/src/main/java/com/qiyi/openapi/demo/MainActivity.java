@@ -1,5 +1,6 @@
 package com.qiyi.openapi.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qiyi.openapi.demo.activity.VideoRecorderActivity;
 import com.qiyi.openapi.demo.fragment.ARFragment;
 import com.qiyi.openapi.demo.fragment.NotificationFragment;
 import com.qiyi.openapi.demo.fragment.RecommendFragment;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private void initTabView() {
         // 初始化Fragment
         mRecommendFragment = RecommendFragment.newInstance();
-        mARFragment = new ARFragment();
+        mARFragment = new ARFragment(); // ARFragment实际上并没有使用
         mNotificationFragment = new NotificationFragment();
         mFragments = new Fragment[]{ mRecommendFragment, mARFragment, mNotificationFragment };
 
@@ -70,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.re_ar:
                 mIndex = 1;
-                break;
+                Intent videoRecorderIntent = new Intent(MainActivity.this, VideoRecorderActivity.class);
+                startActivity(videoRecorderIntent);
+                return;
             case R.id.re_notification:
                 mIndex = 2;
                 break;
