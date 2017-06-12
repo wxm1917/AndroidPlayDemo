@@ -4,7 +4,114 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--the height 200 is reference value, normally the width and height should be 16:9-->
+    <Button
+        android:id="@+id/id_test"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="测试"/>
+
+    <TextView
+        android:id="@+id/id_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="200dp"
+        android:text="00:00:00"/>
+
+    <TextView
+        android:id="@+id/id_total_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="200dp"
+        android:text="02:22:00"/>
+
+    <SeekBar
+        android:id="@+id/id_progress"
+        android:layout_below="@id/id_current_time"
+        android:max="100"
+        android:progress="0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/id_playPause"
+        android:layout_below="@id/id_progress"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause"/>
+
+    <!--<com.qiyi.video.playcore.QiyiVideoView-->
+        <!--android:id="@+id/id_videoview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp" />-->
+
+    <!-- youtube效果 -->
+    <com.qiyi.openapi.demo.view.YouTubePlayEffect
+        android:id="@+id/youtube_effect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:id="@+id/id_player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--the height 200 is reference value, normally the width and height should be 16:9-->
+            <com.qiyi.video.playcore.QiyiVideoView
+                android:id="@+id/id_videoview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/id_current_time"-->
+                <!--android:layout_below="@id/id_videoview"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="14dp"-->
+                <!--android:text="00:00:00"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/id_total_time"-->
+                <!--android:layout_below="@id/id_videoview"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_marginRight="14dp"-->
+                <!--android:text="02:22:00"/>-->
+
+            <!--<SeekBar-->
+                <!--android:id="@+id/id_progress"-->
+                <!--android:layout_below="@id/id_current_time"-->
+                <!--android:max="100"-->
+                <!--android:progress="0"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+            <!--<Button
+                android:id="@+id/id_playPause"
+                android:layout_below="@id/id_progress"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pause"/>-->
+
+        </RelativeLayout>
+
+        <SurfaceView
+            android:id="@+id/player"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="800dp"/>
+
+    </com.qiyi.openapi.demo.view.YouTubePlayEffect>
+
+    <!--&lt;!&ndash;the height 200 is reference value, normally the width and height should be 16:9&ndash;&gt;
     <com.qiyi.video.playcore.QiyiVideoView
         android:id="@+id/id_videoview"
         android:layout_width="match_parent"
@@ -41,5 +148,5 @@
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pause"/>
+        android:text="Pause"/>-->
 </RelativeLayout>

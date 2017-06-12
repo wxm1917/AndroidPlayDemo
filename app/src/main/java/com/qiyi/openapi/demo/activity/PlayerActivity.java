@@ -1,8 +1,12 @@
 package com.qiyi.openapi.demo.activity;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import com.qiyi.apilib.utils.LogUtils;
 import com.qiyi.apilib.utils.StringUtils;
 import com.qiyi.openapi.demo.R;
+import com.qiyi.openapi.demo.view.YouTubePlayEffect;
 import com.qiyi.video.playcore.ErrorCode;
 import com.qiyi.video.playcore.IQYPlayerHandlerCallBack;
 import com.qiyi.video.playcore.QiyiVideoView;
@@ -22,9 +27,9 @@ import java.util.concurrent.TimeUnit;
  * Created by zhouxiaming on 2017/5/9.
  */
 
-public class PlayerActivity extends BaseActivity {
+public class PlayerActivity extends BaseActivity implements YouTubePlayEffect.Callback {
     private static final int PERMISSION_REQUEST_CODE = 7171;
-    private static final String TAG = PlayerActivity.class.getSimpleName();
+    private static final String TAG = PlayerActivity.class.getSimpleName() + "test";
 
     private static final int HANDLER_MSG_UPDATE_PROGRESS = 1;
     private static final int HANDLER_DEPLAY_UPDATE_PROGRESS = 1000; // 1s
@@ -34,6 +39,11 @@ public class PlayerActivity extends BaseActivity {
     private Button mPlayPauseBtn;
     private TextView mCurrentTime;
     private TextView mTotalTime;
+    // youtube效果组件
+    private YouTubePlayEffect mYouTubePlayEffect;
+    private Button mTestBtn;
+    private SurfaceView mPlayer;
+
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_player;
@@ -80,7 +90,7 @@ public class PlayerActivity extends BaseActivity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                LogUtils.d(TAG, "onProgressChanged, progress = " + progress + ", fromUser = " + fromUser);
+                LogUtils.e(TAG, "onProgressChanged, progress = " + progress + ", fromUser = " + fromUser);
                 if(fromUser) {
                     mProgress = progress;
                 }
@@ -97,25 +107,81 @@ public class PlayerActivity extends BaseActivity {
                 mVideoView.seekTo(mProgress);
             }
         });
+
+        mYouTubePlayEffect = (YouTubePlayEffect) findViewById(R.id.youtube_effect);
+        mYouTubePlayEffect.setCallback(this);
+
+        mPlayer = (SurfaceView) findViewById(R.id.player);
+
+        mTestBtn = (Button) findViewById(R.id.id_test);
+        mTestBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+//                LogUtils.e(TAG, "youtube is " + (mYouTubePlayEffect.getVisibility() == View.VISIBLE ? "visible" : "hide"));
+//                LogUtils.e(TAG, "youtube is " + (mVideoView.getVisibility() == View.VISIBLE ? "visible" : "hide"));
+                mYouTubePlayEffect.show();
+                if (null != mVideoView) {
+                    mVideoView.start();
+                }
+                mMainHandler.sendEmptyMessageDelayed(HANDLER_MSG_UPDATE_PROGRESS, HANDLER_DEPLAY_UPDATE_PROGRESS);
+
+//                mYouTubePlayEffect.refreshDrawableState();
+//                mYouTubePlayEffect.invalidate();
+//                mYouTubePlayEffect.isShown();
+//                mVideoView.invalidate();
+
+                Log.e("test", "VideoView width: " + mVideoView.getWidth() + "height: " + mVideoView.getHeight());
+                Log.e("test", "VideoView measured width: " + mVideoView.getMeasuredWidth() + "height: " + mVideoView.getMeasuredHeight());
+
+                Log.e("test", "mEffectPlayer width: " + mYouTubePlayEffect.getWidth() + "height: " + mYouTubePlayEffect.getHeight());
+                Log.e("test", "mEffectPlayer measured width: " + mYouTubePlayEffect.getMeasuredWidth() + "height: " + mYouTubePlayEffect.getMeasuredHeight());
+
+                Log.e("test", "SurfaceView width: " + mPlayer.getWidth() + "height: " + mPlayer.getHeight());
+                Log.e("test", "SurfaceView measured width: " + mPlayer.getMeasuredWidth() + "height: " + mPlayer.getMeasuredHeight());
+
+            }
+        });
     }
 
     private void setPlayerCallback() {
         mVideoView.setPlayerCallBack(mCallBack);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        mYouTubePlayEffect.show();
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (null != mVideoView) {
-            mVideoView.start();
-        }
-        mMainHandler.sendEmptyMessageDelayed(HANDLER_MSG_UPDATE_PROGRESS, HANDLER_DEPLAY_UPDATE_PROGRESS);
+        LogUtils.e(TAG, "onStart");
+//        mYouTubePlayEffect.show();
+//        if (null != mVideoView) {
+//            mVideoView.start();
+//        }
+//        mMainHandler.sendEmptyMessageDelayed(HANDLER_MSG_UPDATE_PROGRESS, HANDLER_DEPLAY_UPDATE_PROGRESS);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtils.e(TAG, "onResume");
+        mYouTubePlayEffect.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtils.e(TAG, "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        LogUtils.e(TAG, "onStop");
         if (null != mVideoView) {
             mVideoView.pause();
         }
@@ -131,6 +197,7 @@ public class PlayerActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        LogUtils.e(TAG, "onDestroy");
         mMainHandler.removeCallbacksAndMessages(null);
         mVideoView.release();
         mVideoView = null;
@@ -143,12 +210,12 @@ public class PlayerActivity extends BaseActivity {
 
         @Override
         public void handleMessage(Message msg) {
-            LogUtils.d(TAG, "handleMessage, msg.what = " + msg.what);
+            LogUtils.e(TAG, "handleMessage, msg.what = " + msg.what);
             switch (msg.what) {
                 case HANDLER_MSG_UPDATE_PROGRESS:
                     int duration = mVideoView.getDuration();
                     int progress = mVideoView.getCurrentPosition();
-                    LogUtils.d(TAG, "HANDLER_MSG_UPDATE_PROGRESS, duration = " + duration + ", currentPosition = " + progress);
+                    LogUtils.e(TAG, "HANDLER_MSG_UPDATE_PROGRESS, duration = " + duration + ", currentPosition = " + progress);
                     if (duration > 0) {
                         mSeekBar.setMax(duration);
                         mSeekBar.setProgress(progress);
@@ -182,7 +249,7 @@ public class PlayerActivity extends BaseActivity {
          */
         @Override
         public void OnSeekSuccess(long l) {
-            LogUtils.i(TAG, "OnSeekSuccess: " + l);
+            LogUtils.e(TAG, "OnSeekSuccess: " + l);
         }
 
         /**
@@ -190,7 +257,7 @@ public class PlayerActivity extends BaseActivity {
          */
         @Override
         public void OnWaiting(boolean b) {
-            LogUtils.i(TAG, "OnWaiting: " + b);
+            LogUtils.e(TAG, "OnWaiting: " + b);
         }
 
         /**
@@ -198,7 +265,7 @@ public class PlayerActivity extends BaseActivity {
          */
         @Override
         public void OnError(ErrorCode errorCode) {
-            LogUtils.i(TAG, "OnError: " + errorCode);
+            LogUtils.e(TAG, "OnError: " + errorCode);
             mMainHandler.removeMessages(HANDLER_MSG_UPDATE_PROGRESS);
         }
 
@@ -216,7 +283,14 @@ public class PlayerActivity extends BaseActivity {
          */
         @Override
         public void OnPlayerStateChanged(int i) {
-            LogUtils.i(TAG, "OnPlayerStateChanged: " + i);
+            LogUtils.e(TAG, "OnPlayerStateChanged: " + i);
         }
     };
+
+    @Override
+    public void onDisappear(int direct) {
+        mMainHandler.removeCallbacksAndMessages(null);
+        mVideoView.release();
+        mVideoView = null;
+    }
 }
