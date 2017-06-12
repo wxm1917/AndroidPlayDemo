@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- 视频录制界面 -->
     <SurfaceView
         android:id="@+id/main_surface_view"
         android:layout_width="match_parent"
@@ -13,6 +14,7 @@
         android:layout_height="180dp"
         android:layout_alignParentBottom="true">
 
+        <!-- 操作提示信息 -->
         <TextView
             android:id="@+id/tv_info"
             android:layout_width="wrap_content"
@@ -22,22 +24,43 @@
             android:textColor="#ffffff"
             android:text="双击放大"/>
 
+        <!-- 视频录制完成后的操作视图 -->
         <com.qiyi.openapi.demo.view.SendView
             android:id="@+id/view_send"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+        <!-- 录制操作视图 -->
         <RelativeLayout
             android:id="@+id/record_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- 进度条 -->
             <com.qiyi.openapi.demo.view.VideoProgressBar
                 android:id="@+id/main_progress_bar"
                 android:layout_width="85dp"
                 android:layout_height="85dp"
                 android:layout_centerInParent="true" />
 
+            <!-- 找视频按钮 -->
+            <RelativeLayout
+                android:id="@+id/btn_find"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="50dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_find_white_24dp"
+                    android:layout_centerInParent="true" />
+
+            </RelativeLayout>
+
+            <!-- 录制按钮 -->
             <TextView
                 android:id="@+id/main_press_control"
                 android:layout_width="68dp"
@@ -49,6 +72,7 @@
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
+            <!-- 录制界面关闭按钮 -->
             <RelativeLayout
                 android:id="@+id/btn_close"
                 android:layout_width="50dp"
