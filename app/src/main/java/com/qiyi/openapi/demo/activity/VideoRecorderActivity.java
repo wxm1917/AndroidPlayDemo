@@ -13,10 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qiyi.openapi.demo.R;
+import com.qiyi.openapi.demo.common.Constants;
+import com.qiyi.openapi.demo.util.FileUtils;
 import com.qiyi.openapi.demo.util.MediaUtils;
 import com.qiyi.openapi.demo.view.SendView;
 import com.qiyi.openapi.demo.view.VideoProgressBar;
 
+import java.io.File;
 import java.util.UUID;
 
 public class VideoRecorderActivity extends BaseActivity {
@@ -42,7 +45,18 @@ public class VideoRecorderActivity extends BaseActivity {
         // setting
         mediaUtils = new MediaUtils(this);
         mediaUtils.setRecorderType(MediaUtils.MEDIA_VIDEO);
-        mediaUtils.setTargetDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES));
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            // sd card 不可用
+            return;
+        }
+        String targetPath = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.VIDEO_PATH;
+        File targetDirFile = null;
+        if(!FileUtils.isFileExist(targetPath)){
+            targetDirFile = FileUtils.createDirOnSDCard(targetPath);
+        }else{
+            targetDirFile = new File(targetPath + File.separator);
+        }
+        mediaUtils.setTargetDir(targetDirFile);
         mediaUtils.setTargetName(UUID.randomUUID() + ".mp4");
         mediaUtils.setSurfaceView(surfaceView);
         // btn
