@@ -2,6 +2,7 @@ package com.qiyi.openapi.demo.activity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -32,6 +33,8 @@ public class VideoRecorderActivity extends BaseActivity {
     private TextView view;
     private SendView send;
     private RelativeLayout recordLayout;
+    // 找视频按钮
+    private RelativeLayout mFindLayout;
 
     @Override
     protected int getLayoutResourceId() {
@@ -78,6 +81,15 @@ public class VideoRecorderActivity extends BaseActivity {
         progressBar = (VideoProgressBar) findViewById(R.id.main_progress_bar);
         progressBar.setOnProgressEndListener(listener);
         progressBar.setCancel(true);
+
+        mFindLayout = (RelativeLayout) findViewById(R.id.btn_find);
+        mFindLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(VideoRecorderActivity.this, UnityPlayerActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -225,7 +237,9 @@ public class VideoRecorderActivity extends BaseActivity {
             String path = mediaUtils.getTargetFilePath();
             Toast.makeText(VideoRecorderActivity.this, "文件以保存至：" + path, Toast.LENGTH_SHORT).show();
             send.stopAnim();
-            recordLayout.setVisibility(View.VISIBLE);
+//            recordLayout.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(VideoRecorderActivity.this, UnityPlayerActivity.class);
+            startActivity(intent);
         }
     };
 
