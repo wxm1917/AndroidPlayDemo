@@ -60,7 +60,8 @@ public class VideoRecorderActivity extends BaseActivity {
             targetDirFile = new File(targetPath + File.separator);
         }
         mediaUtils.setTargetDir(targetDirFile);
-        mediaUtils.setTargetName(UUID.randomUUID() + ".mp4");
+//        mediaUtils.setTargetName(UUID.randomUUID() + ".mp4");
+        mediaUtils.setTargetName("1.mp4");
         mediaUtils.setSurfaceView(surfaceView);
         // btn
         send = (SendView) findViewById(R.id.view_send);
