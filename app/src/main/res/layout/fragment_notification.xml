@@ -21,13 +21,25 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_recycler_view"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/loading_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="visible"/>
+        <ImageView
+            android:id="@+id/id_iv_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/panda"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/id_iv_holder"
+            android:layout_centerHorizontal="true"
+            android:text="还没通知信息哦~" />
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

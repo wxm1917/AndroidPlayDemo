@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         // 初始化Fragment
         mRecommendFragment = RecommendFragment.newInstance();
         mARFragment = new ARFragment(); // ARFragment实际上并没有使用
-        mNotificationFragment = new NotificationFragment();
+        mNotificationFragment = NotificationFragment.newInstance();
         mFragments = new Fragment[]{ mRecommendFragment, mARFragment, mNotificationFragment };
 
         // 初始化ImageView

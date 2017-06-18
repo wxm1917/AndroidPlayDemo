@@ -60,7 +60,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
-                android:text="00:00:00"/>
+                android:layout_alignTop="@+id/id_progress"
+                android:text="00:00:00"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/id_total_time"
@@ -68,7 +70,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="14dp"
-                android:text="02:22:00"/>
+                android:layout_alignTop="@+id/id_progress"
+                android:text="02:22:00"
+                android:textColor="@color/white"/>
 
             <SeekBar
                 android:id="@+id/id_progress"
@@ -76,7 +80,7 @@
                 android:max="100"
                 android:progress="0"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <ImageButton
                 android:id="@+id/id_playPause"

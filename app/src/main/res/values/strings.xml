@@ -20,6 +20,9 @@
     <string name="bottom_ar">AR视频</string>
     <string name="bottom_notification">通知</string>
 
+    <!-- Notification -->
+    <string name="notification_title">爱奇艺通知</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
