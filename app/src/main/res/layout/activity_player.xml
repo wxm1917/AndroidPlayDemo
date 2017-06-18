@@ -4,51 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/id_test"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="测试"/>
+    <!--<TextView-->
+        <!--android:id="@+id/id_current_time"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="14dp"-->
+        <!--android:layout_marginTop="200dp"-->
+        <!--android:text="00:00:00"/>-->
 
-    <TextView
-        android:id="@+id/id_current_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="200dp"
-        android:text="00:00:00"/>
+    <!--<TextView-->
+        <!--android:id="@+id/id_total_time"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="14dp"-->
+        <!--android:layout_marginTop="200dp"-->
+        <!--android:text="02:22:00"/>-->
 
-    <TextView
-        android:id="@+id/id_total_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="200dp"
-        android:text="02:22:00"/>
-
-    <SeekBar
-        android:id="@+id/id_progress"
-        android:layout_below="@id/id_current_time"
-        android:max="100"
-        android:progress="0"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/id_playPause"
-        android:layout_below="@id/id_progress"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pause"/>
-
-    <!--<com.qiyi.video.playcore.QiyiVideoView-->
-        <!--android:id="@+id/id_videoview"-->
+    <!--<SeekBar-->
+        <!--android:id="@+id/id_progress"-->
+        <!--android:layout_below="@id/id_current_time"-->
+        <!--android:max="100"-->
+        <!--android:progress="0"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="200dp" />-->
+        <!--android:layout_height="wrap_content" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/id_playPause"-->
+        <!--android:layout_below="@id/id_progress"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Pause"/>-->
 
     <!-- youtube效果 -->
     <com.qiyi.openapi.demo.view.YouTubePlayEffect
@@ -68,48 +55,107 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
-            <!--<TextView-->
-                <!--android:id="@+id/id_current_time"-->
-                <!--android:layout_below="@id/id_videoview"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="14dp"-->
-                <!--android:text="00:00:00"/>-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/id_total_time"-->
-                <!--android:layout_below="@id/id_videoview"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_marginRight="14dp"-->
-                <!--android:text="02:22:00"/>-->
-
-            <!--<SeekBar-->
-                <!--android:id="@+id/id_progress"-->
-                <!--android:layout_below="@id/id_current_time"-->
-                <!--android:max="100"-->
-                <!--android:progress="0"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content" />-->
-
-            <!--<Button
-                android:id="@+id/id_playPause"
-                android:layout_below="@id/id_progress"
-                android:layout_centerHorizontal="true"
+            <TextView
+                android:id="@+id/id_current_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pause"/>-->
+                android:layout_marginLeft="14dp"
+                android:text="00:00:00"/>
+
+            <TextView
+                android:id="@+id/id_total_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="14dp"
+                android:text="02:22:00"/>
+
+            <SeekBar
+                android:id="@+id/id_progress"
+                android:layout_alignParentBottom="true"
+                android:max="100"
+                android:progress="0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/id_playPause"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pause"
+                android:background="@android:color/transparent"/>
 
         </RelativeLayout>
 
-        <SurfaceView
-            android:id="@+id/player"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="800dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </RelativeLayout>
 
     </com.qiyi.openapi.demo.view.YouTubePlayEffect>
+
+    <!-- youtube效果 -->
+    <!--<com.qiyi.openapi.demo.view.YouTubePlayEffect-->
+        <!--android:id="@+id/youtube_effect"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--&gt;-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/id_player"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--&lt;!&ndash;the height 200 is reference value, normally the width and height should be 16:9&ndash;&gt;-->
+            <!--<com.qiyi.video.playcore.QiyiVideoView-->
+                <!--android:id="@+id/id_videoview"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp" />-->
+
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/id_current_time"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_below="@id/id_videoview"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginLeft="14dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="00:00:00"/>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/id_total_time"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_below="@id/id_videoview"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_alignParentRight="true"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginRight="14dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="02:22:00"/>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<SeekBar&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/id_progress"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_below="@id/id_current_time"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:max="100"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:progress="0"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content" />&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<Button-->
+                <!--android:id="@+id/id_playPause"-->
+                <!--android:layout_below="@id/id_progress"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Pause"/>&ndash;&gt;-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<SurfaceView-->
+            <!--android:id="@+id/player"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:layout_marginTop="800dp"/>-->
+
+    <!--</com.qiyi.openapi.demo.view.YouTubePlayEffect>-->
 
     <!--&lt;!&ndash;the height 200 is reference value, normally the width and height should be 16:9&ndash;&gt;
     <com.qiyi.video.playcore.QiyiVideoView

@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.qiyi.apilib.utils.LogUtils;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -16,6 +18,11 @@ import java.lang.ref.WeakReference;
  */
 
 public class YouTubePlayEffect extends ViewGroup {
+    /**
+     * 是否点击了但是没有移动Player的标志
+     */
+    private boolean mClickFlag;
+
     /**
      * 当前拖动的方向
      */
@@ -186,12 +193,16 @@ public class YouTubePlayEffect extends ViewGroup {
         if(isHit) {
             switch (MotionEventCompat.getActionMasked(event)){
                 case MotionEvent.ACTION_DOWN: {
+                    LogUtils.e("wxm", "down");
+                    mClickFlag = true;
                     mDownX = (int) event.getX();
                     mDownY = (int) event.getY();
                 }
                 break;
 
                 case MotionEvent.ACTION_MOVE:
+                    LogUtils.e("wxm", "move");
+//                    mClickFlag = false;
                     if(mDragDirect == NONE){
                         int dx = Math.abs(mDownX - (int)event.getX());
                         int dy = Math.abs(mDownY - (int)event.getY());
@@ -207,6 +218,7 @@ public class YouTubePlayEffect extends ViewGroup {
                     break;
 
                 case MotionEvent.ACTION_UP:{
+                    LogUtils.e("wxm", "up");
                     if(mDragDirect == NONE) {
                         int dx = Math.abs(mDownX - (int) event.getX());
                         int dy = Math.abs(mDownY - (int) event.getY());
@@ -215,10 +227,20 @@ public class YouTubePlayEffect extends ViewGroup {
                         if (Math.sqrt(dx * dx + dy * dy) < slop){
                             mDragDirect = VERTICAL;
 
-                            if(mIsMinimum)
+//                            if(mIsMinimum)
+//                                maximize();
+//                            else
+//                                minimize();
+                            if (mIsMinimum) {
                                 maximize();
-                            else
-                                minimize();
+                            }
+                            else{
+                                if (mClickFlag && mCallback != null) {
+                                    mCallback.get().onClick();
+                                } else {
+                                    minimize();
+                                }
+                            }
                         }
                     }
                 }
@@ -496,12 +518,6 @@ public class YouTubePlayEffect extends ViewGroup {
 
     public interface Callback{
         void onDisappear(int direct);
-    }
-
-    // test
-    public void requestLayoutLightly2(){
-        justMeasurePlayer();
-        onLayoutLightly();
-        ViewCompat.postInvalidateOnAnimation(this);
+        void onClick();
     }
 }

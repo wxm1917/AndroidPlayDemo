@@ -10,6 +10,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import com.qiyi.video.playcore.ErrorCode;
 import com.qiyi.video.playcore.IQYPlayerHandlerCallBack;
 import com.qiyi.video.playcore.QiyiVideoView;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,16 +35,21 @@ public class PlayerActivity extends BaseActivity implements YouTubePlayEffect.Ca
 
     private static final int HANDLER_MSG_UPDATE_PROGRESS = 1;
     private static final int HANDLER_DEPLAY_UPDATE_PROGRESS = 1000; // 1s
+    // 隐藏播放器进度条和播放按钮等控制组件
+    private static final int HANDLER_MSG_HIDE_VIDEO_CONTROL_VIEW = 2;
+    private static final int HANDLER_DELAY_HIDE_VIDEO_CONTROL_VIEW = 5 * 1000;
 
     private QiyiVideoView mVideoView;
     private SeekBar mSeekBar;
-    private Button mPlayPauseBtn;
+    private ImageButton mPlayPauseBtn;
     private TextView mCurrentTime;
     private TextView mTotalTime;
     // youtube效果组件
     private YouTubePlayEffect mYouTubePlayEffect;
-    private Button mTestBtn;
-    private SurfaceView mPlayer;
+    // youtube效果组件是否显示的标志
+    private boolean mYouTubePlayEffectShowFlag;
+    // 播放器进度条和播放按钮等控制组件是否显示的标志
+    private boolean mVideoViewControlViewFlag;
 
     @Override
     protected int getLayoutResourceId() {
@@ -68,17 +75,19 @@ public class PlayerActivity extends BaseActivity implements YouTubePlayEffect.Ca
         mCurrentTime = (TextView) findViewById(R.id.id_current_time);
         mTotalTime = (TextView) findViewById(R.id.id_total_time);
 
-        mPlayPauseBtn = (Button) findViewById(R.id.id_playPause);
+        mPlayPauseBtn = (ImageButton) findViewById(R.id.id_playPause);
         mPlayPauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mYouTubePlayEffect.show();
+
                 if (mVideoView.isPlaying()) {
                     mVideoView.pause();
-                    mPlayPauseBtn.setText("Play");
+                    mPlayPauseBtn.setImageDrawable(getResources().getDrawable(R.drawable.play));
                     mMainHandler.removeMessages(HANDLER_MSG_UPDATE_PROGRESS);
                 } else {
                     mVideoView.start();
-                    mPlayPauseBtn.setText("Pause");
+                    mPlayPauseBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause));
                     mMainHandler.sendEmptyMessageDelayed(HANDLER_MSG_UPDATE_PROGRESS, HANDLER_DEPLAY_UPDATE_PROGRESS);
                 }
             }
@@ -111,37 +120,6 @@ public class PlayerActivity extends BaseActivity implements YouTubePlayEffect.Ca
         mYouTubePlayEffect = (YouTubePlayEffect) findViewById(R.id.youtube_effect);
         mYouTubePlayEffect.setCallback(this);
 
-        mPlayer = (SurfaceView) findViewById(R.id.player);
-
-        mTestBtn = (Button) findViewById(R.id.id_test);
-        mTestBtn.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-//                LogUtils.e(TAG, "youtube is " + (mYouTubePlayEffect.getVisibility() == View.VISIBLE ? "visible" : "hide"));
-//                LogUtils.e(TAG, "youtube is " + (mVideoView.getVisibility() == View.VISIBLE ? "visible" : "hide"));
-                mYouTubePlayEffect.show();
-                if (null != mVideoView) {
-                    mVideoView.start();
-                }
-                mMainHandler.sendEmptyMessageDelayed(HANDLER_MSG_UPDATE_PROGRESS, HANDLER_DEPLAY_UPDATE_PROGRESS);
-
-//                mYouTubePlayEffect.refreshDrawableState();
-//                mYouTubePlayEffect.invalidate();
-//                mYouTubePlayEffect.isShown();
-//                mVideoView.invalidate();
-
-                Log.e("test", "VideoView width: " + mVideoView.getWidth() + "height: " + mVideoView.getHeight());
-                Log.e("test", "VideoView measured width: " + mVideoView.getMeasuredWidth() + "height: " + mVideoView.getMeasuredHeight());
-
-                Log.e("test", "mEffectPlayer width: " + mYouTubePlayEffect.getWidth() + "height: " + mYouTubePlayEffect.getHeight());
-                Log.e("test", "mEffectPlayer measured width: " + mYouTubePlayEffect.getMeasuredWidth() + "height: " + mYouTubePlayEffect.getMeasuredHeight());
-
-                Log.e("test", "SurfaceView width: " + mPlayer.getWidth() + "height: " + mPlayer.getHeight());
-                Log.e("test", "SurfaceView measured width: " + mPlayer.getMeasuredWidth() + "height: " + mPlayer.getMeasuredHeight());
-
-            }
-        });
     }
 
     private void setPlayerCallback() {
@@ -151,25 +129,25 @@ public class PlayerActivity extends BaseActivity implements YouTubePlayEffect.Ca
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mYouTubePlayEffect.show();
+        mYouTubePlayEffectShowFlag = false;
+        mVideoViewControlViewFlag = true;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         LogUtils.e(TAG, "onStart");
-//        mYouTubePlayEffect.show();
-//        if (null != mVideoView) {
-//            mVideoView.start();
-//        }
-//        mMainHandler.sendEmptyMessageDelayed(HANDLER_MSG_UPDATE_PROGRESS, HANDLER_DEPLAY_UPDATE_PROGRESS);
+        if (null != mVideoView) {
+            mVideoView.start();
+        }
+        mMainHandler.sendEmptyMessageDelayed(HANDLER_MSG_UPDATE_PROGRESS, HANDLER_DEPLAY_UPDATE_PROGRESS);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         LogUtils.e(TAG, "onResume");
-        mYouTubePlayEffect.show();
+        mMainHandler.sendEmptyMessageDelayed(HANDLER_MSG_HIDE_VIDEO_CONTROL_VIEW, HANDLER_DELAY_HIDE_VIDEO_CONTROL_VIEW);
     }
 
     @Override
@@ -213,6 +191,11 @@ public class PlayerActivity extends BaseActivity implements YouTubePlayEffect.Ca
             LogUtils.e(TAG, "handleMessage, msg.what = " + msg.what);
             switch (msg.what) {
                 case HANDLER_MSG_UPDATE_PROGRESS:
+                    if (!mYouTubePlayEffectShowFlag) {
+                        mYouTubePlayEffect.show();
+                        mYouTubePlayEffectShowFlag = true;
+                    }
+
                     int duration = mVideoView.getDuration();
                     int progress = mVideoView.getCurrentPosition();
                     LogUtils.e(TAG, "HANDLER_MSG_UPDATE_PROGRESS, duration = " + duration + ", currentPosition = " + progress);
@@ -225,6 +208,10 @@ public class PlayerActivity extends BaseActivity implements YouTubePlayEffect.Ca
                     }
                     mMainHandler.sendEmptyMessageDelayed(HANDLER_MSG_UPDATE_PROGRESS, HANDLER_DEPLAY_UPDATE_PROGRESS);
                     break;
+                case HANDLER_MSG_HIDE_VIDEO_CONTROL_VIEW:
+                    mSeekBar.setVisibility(View.GONE);
+                    mPlayPauseBtn.setVisibility(View.GONE);
+                    mVideoViewControlViewFlag = false;
                 default:
                     break;
             }
@@ -292,5 +279,18 @@ public class PlayerActivity extends BaseActivity implements YouTubePlayEffect.Ca
         mMainHandler.removeCallbacksAndMessages(null);
         mVideoView.release();
         mVideoView = null;
+    }
+
+    @Override
+    public void onClick() {
+        if (mVideoViewControlViewFlag) {
+            mSeekBar.setVisibility(View.GONE);
+            mPlayPauseBtn.setVisibility(View.GONE);
+            mVideoViewControlViewFlag = false;
+        } else {
+            mSeekBar.setVisibility(View.VISIBLE);
+            mPlayPauseBtn.setVisibility(View.VISIBLE);
+            mVideoViewControlViewFlag = true;
+        }
     }
 }
