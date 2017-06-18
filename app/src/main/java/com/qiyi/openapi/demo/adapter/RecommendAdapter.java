@@ -23,6 +23,7 @@ import com.qiyi.openapi.demo.QYPlayerUtils;
 import com.qiyi.openapi.demo.R;
 import com.qiyi.openapi.demo.view.CycleBanner;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,11 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private int[] screen;
     Activity context;
+
+    /**
+     * 弱引用，绑定回调
+     */
+    private WeakReference<Callback> mCallback;
 
     private List<BaseEntity> entityList = new ArrayList<BaseEntity>();
     public RecommendAdapter(Activity context){
@@ -291,7 +297,10 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             BaseEntity dataObj = entityList.get(position);
             if (dataObj instanceof VideoInfo) {
                 VideoInfo videoInfo = (VideoInfo)dataObj;
-                QYPlayerUtils.jumpToPlayerActivity(context, videoInfo.aId, videoInfo.tId);
+//                QYPlayerUtils.jumpToPlayerActivity(context, videoInfo.aId, videoInfo.tId);
+                if (mCallback != null) {
+                    mCallback.get().onItemClick(videoInfo.aId, videoInfo.tId);
+                }
             }
         }
     }
@@ -373,7 +382,10 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @Override
         public void onClick(View v) {
             VideoInfo videoInfo = (VideoInfo)v.getTag(R.id.tag_key);
-            QYPlayerUtils.jumpToPlayerActivity(context, videoInfo.aId, videoInfo.tId);
+//            QYPlayerUtils.jumpToPlayerActivity(context, videoInfo.aId, videoInfo.tId);
+            if (mCallback != null) {
+                mCallback.get().onItemClick(videoInfo.aId, videoInfo.tId);
+            }
         }
     }
 
@@ -387,6 +399,14 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void addVideo(VideoInfo videoInfo) {
             videoInfos.add(videoInfo);
         }
+    }
+
+    public void setCallback(Callback callback){
+        mCallback = new WeakReference<>(callback);
+    }
+
+    public interface Callback{
+        void onItemClick(String aid, String tid);
     }
 
 }

@@ -30,4 +30,6 @@
         android:layout_gravity="center"
         android:visibility="visible"/>
 
+    <include layout="@layout/activity_player" />
+
 </android.support.design.widget.CoordinatorLayout>

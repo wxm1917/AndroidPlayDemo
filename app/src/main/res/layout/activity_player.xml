@@ -41,13 +41,13 @@
     <com.qiyi.openapi.demo.view.YouTubePlayEffect
         android:id="@+id/youtube_effect"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/id_player"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/black">
 
             <!--the height 200 is reference value, normally the width and height should be 16:9-->
             <com.qiyi.video.playcore.QiyiVideoView
@@ -92,6 +92,17 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/id_tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="视频描述"
+                android:textColor="@color/black"
+                android:background="@color/white"/>
+
         </RelativeLayout>
 
     </com.qiyi.openapi.demo.view.YouTubePlayEffect>
