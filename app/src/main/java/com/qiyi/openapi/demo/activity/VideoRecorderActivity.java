@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -13,10 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qiyi.openapi.demo.MainActivity;
 import com.qiyi.openapi.demo.R;
 import com.qiyi.openapi.demo.common.Constants;
 import com.qiyi.openapi.demo.util.FileUtils;
 import com.qiyi.openapi.demo.util.MediaUtils;
+import com.qiyi.openapi.demo.util.PermissionUtils;
 import com.qiyi.openapi.demo.view.SendView;
 import com.qiyi.openapi.demo.view.VideoProgressBar;
 
@@ -97,7 +100,45 @@ public class VideoRecorderActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setCancel(true);
+        PermissionUtils.requestPermission(VideoRecorderActivity.this, PermissionUtils.CODE_RECORD_AUDIO, mPermissionGrant);
     }
+
+    private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
+        @Override
+        public void onPermissionGranted(int requestCode) {
+            switch (requestCode) {
+                case PermissionUtils.CODE_RECORD_AUDIO:
+//                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_RECORD_AUDIO", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_GET_ACCOUNTS:
+                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_GET_ACCOUNTS", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_READ_PHONE_STATE:
+                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_READ_PHONE_STATE", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_CALL_PHONE:
+                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_CALL_PHONE", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_CAMERA:
+                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_CAMERA", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_ACCESS_FINE_LOCATION:
+                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_ACCESS_COARSE_LOCATION:
+                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_READ_EXTERNAL_STORAGE:
+                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_READ_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE:
+                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_WRITE_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     View.OnTouchListener btnTouch = new View.OnTouchListener() {
         @Override
@@ -243,5 +284,10 @@ public class VideoRecorderActivity extends BaseActivity {
             startActivity(intent);
         }
     };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionUtils.requestPermissionsResult(VideoRecorderActivity.this, requestCode, permissions, grantResults, mPermissionGrant);
+    }
 
 }

@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.qiyi.openapi.demo.R;
 import com.qiyi.openapi.demo.view.AutoFitTextureView;
 
 import java.io.File;
@@ -219,7 +220,8 @@ public class MediaUtils implements SurfaceHolder.Callback {
             } catch (RuntimeException e) {
 //                Toast.makeText(activity, "请打开摄像头权限", Toast.LENGTH_SHORT)
 //                        .show();
-                PermissionUtils.openSettingActivity(activity, "请打开摄像头权限");
+                String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
+                PermissionUtils.openSettingActivity(activity, permissionsHint[PermissionUtils.CODE_CAMERA]);
                 Log.e(TAG, "RuntimeException:" + e.getMessage());
                 return;
             }
@@ -314,7 +316,8 @@ public class MediaUtils implements SurfaceHolder.Callback {
             } catch (RuntimeException r) {
                 releaseMediaRecorder();
                 Log.d("Recorder", "RuntimeException: start() is called immediately after stop()");
-                PermissionUtils.openSettingActivity(activity, "请打开录音权限");
+                String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
+                PermissionUtils.openSettingActivity(activity, permissionsHint[PermissionUtils.CODE_RECORD_AUDIO]);
             }
         }
     }

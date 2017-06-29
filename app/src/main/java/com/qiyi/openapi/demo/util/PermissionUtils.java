@@ -290,7 +290,8 @@ public class PermissionUtils {
             Log.i(TAG, "onRequestPermissionsResult PERMISSION NOT GRANTED");
             //TODO
             String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
-            openSettingActivity(activity, "Result" + permissionsHint[requestCode]);
+//            openSettingActivity(activity, "Result" + permissionsHint[requestCode]);
+            openSettingActivity(activity, permissionsHint[requestCode]);
         }
 
     }
