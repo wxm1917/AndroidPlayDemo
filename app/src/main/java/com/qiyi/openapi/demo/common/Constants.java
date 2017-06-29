@@ -9,4 +9,10 @@ public class Constants {
     public static final String QYDEMO_ROOT_PATH = "/qydemo";
     // 视频存放路径
     public static final String VIDEO_PATH = QYDEMO_ROOT_PATH + "/video";
+
+    public static int SCRRENWIDTH;
+    public static int SCREENHEIGHT;
+
+    public static int RENDERERWIDTH;
+    public static int RENDERERHEIGHT;
 }

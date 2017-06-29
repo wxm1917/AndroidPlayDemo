@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.qiyi.openapi.demo.view.AutoFitTextureView;
 
@@ -212,7 +213,16 @@ public class MediaUtils implements SurfaceHolder.Callback {
 
     private void startPreView(SurfaceHolder holder) {
         if (mCamera == null) {
-            mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+//            mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+            try {
+                mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+            } catch (RuntimeException e) {
+//                Toast.makeText(activity, "请打开摄像头权限", Toast.LENGTH_SHORT)
+//                        .show();
+                PermissionUtils.openSettingActivity(activity, "请打开摄像头权限");
+                Log.e(TAG, "RuntimeException:" + e.getMessage());
+                return;
+            }
         }
         if (mCamera != null) {
             mCamera.setDisplayOrientation(or);
@@ -304,6 +314,7 @@ public class MediaUtils implements SurfaceHolder.Callback {
             } catch (RuntimeException r) {
                 releaseMediaRecorder();
                 Log.d("Recorder", "RuntimeException: start() is called immediately after stop()");
+                PermissionUtils.openSettingActivity(activity, "请打开录音权限");
             }
         }
     }
