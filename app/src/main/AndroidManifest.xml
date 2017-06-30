@@ -99,7 +99,7 @@
         <activity android:name=".activity.VideoRecorderActivity"></activity>
         <!-- AR藏视频Activity -->
         <activity
-            android:name=".activity.UnityPlayerActivity"
+            android:name=".activity.ARVideoActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
             android:label="@string/app_name"
             android:launchMode="singleTask"

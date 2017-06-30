@@ -13,12 +13,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.qiyi.openapi.demo.R;
+import com.qiyi.openapi.demo.fragment.ARFragment;
+import com.qiyi.openapi.demo.util.UnitySplashSDK;
 import com.unity3d.player.UnityPlayer;
 
-public class UnityPlayerActivity extends Activity {
+public class ARVideoActivity extends Activity {
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
     private RelativeLayout mCloseLayout;
     private ImageView mCloseImageView;
+
+    private static ARVideoActivity mActivity;
 
     /**
      * 初始化视图
@@ -31,6 +35,7 @@ public class UnityPlayerActivity extends Activity {
         View view = mUnityPlayer.getView();
         // 将unity视图添加到Android视图中
         parent.addView(view);
+        UnitySplashSDK.getInstance().onCreate(mActivity);
 
         mCloseLayout = (RelativeLayout) findViewById(R.id.id_btn_close);
         mCloseLayout.setOnClickListener(new View.OnClickListener(){
@@ -43,11 +48,19 @@ public class UnityPlayerActivity extends Activity {
         mCloseImageView = (ImageView) findViewById(R.id.id_iv_close);
     }
 
+    /**
+     * 暴露给unity调用的方法
+     */
+    public void hideSplash(){
+        UnitySplashSDK.getInstance().onHideSplash();
+    }
+
     // Setup activity layout
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+        mActivity = this;
 
 //        getWindow().setFormat(PixelFormat.RGBX_8888); // <--- This makes xperia play happy
 //
@@ -130,5 +143,9 @@ public class UnityPlayerActivity extends Activity {
     /*API12*/
     public boolean onGenericMotionEvent(MotionEvent event) {
         return mUnityPlayer.injectEvent(event);
+    }
+
+    public UnityPlayer getUnityPlayer(){
+        return mUnityPlayer;
     }
 }
