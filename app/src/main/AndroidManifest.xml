@@ -96,7 +96,9 @@
             </intent-filter>
         </activity>
         <!-- 短视频录制Activity -->
-        <activity android:name=".activity.VideoRecorderActivity"></activity>
+        <activity
+            android:name=".activity.VideoRecorderActivity"
+            android:theme="@style/FullscreenNoTile"></activity>
         <!-- AR藏视频Activity -->
         <activity
             android:name=".activity.ARVideoActivity"
