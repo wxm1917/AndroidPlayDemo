@@ -79,6 +79,9 @@ public class CameraHelper {
             if (Math.abs(size.height - targetHeight) < minDiff && previewSizes.contains(size)) {
                 optimalSize = size;
                 minDiff = Math.abs(size.height - targetHeight);
+                // 最佳匹配
+                if(Math.abs(ratio - targetRatio) == ASPECT_TOLERANCE)
+                    break;
             }
         }
 

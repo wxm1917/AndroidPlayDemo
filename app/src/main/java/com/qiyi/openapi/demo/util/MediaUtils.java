@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.qiyi.apilib.utils.LogUtils;
 import com.qiyi.openapi.demo.R;
 import com.qiyi.openapi.demo.view.AutoFitTextureView;
 
@@ -222,7 +223,7 @@ public class MediaUtils implements SurfaceHolder.Callback {
 //                        .show();
                 String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
                 PermissionUtils.openSettingActivity(activity, permissionsHint[PermissionUtils.CODE_CAMERA]);
-                Log.e(TAG, "RuntimeException:" + e.getMessage());
+                LogUtils.e(TAG, "RuntimeException:" + e.getMessage());
                 return;
             }
         }
@@ -233,8 +234,10 @@ public class MediaUtils implements SurfaceHolder.Callback {
                 Camera.Parameters parameters = mCamera.getParameters();
                 List<Camera.Size> mSupportedPreviewSizes = parameters.getSupportedPreviewSizes();
                 List<Camera.Size> mSupportedVideoSizes = parameters.getSupportedVideoSizes();
+//                Camera.Size optimalSize = CameraHelper.getOptimalVideoSize(mSupportedVideoSizes,
+//                        mSupportedPreviewSizes, mSurfaceView.getWidth(), mSurfaceView.getHeight());
                 Camera.Size optimalSize = CameraHelper.getOptimalVideoSize(mSupportedVideoSizes,
-                        mSupportedPreviewSizes, mSurfaceView.getWidth(), mSurfaceView.getHeight());
+                        mSupportedPreviewSizes, mSurfaceView.getHeight(), mSurfaceView.getWidth());
                 // Use the same size for recording profile.
                 previewWidth = optimalSize.width;
                 previewHeight = optimalSize.height;

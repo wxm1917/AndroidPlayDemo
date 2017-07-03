@@ -3,7 +3,11 @@ package com.qiyi.openapi.demo.util;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.view.Gravity;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.qiyi.openapi.demo.R;
 import com.qiyi.openapi.demo.activity.ARVideoActivity;
@@ -15,31 +19,23 @@ import com.unity3d.player.UnityPlayer;
  */
 
 public class UnitySplashSDK {
-    // 这是启动画面的图片，这里可以使任意一个View，可以根据自己的需要去自定义
-    private ImageView bgView = null;
-
+    private LinearLayout mSplashLayout = null;
+    private ImageView mSplashView = null;
+    private AnimationDrawable mSplashAnimation = null;
     private UnityPlayer mUnityPlayer = null;
 
     private static UnitySplashSDK mInstance;
 
     public static UnitySplashSDK getInstance() {
-
         if (null == mInstance) {
-
             synchronized (UnitySplashSDK.class) {
-
                 if (null == mInstance) {
-
                     mInstance = new UnitySplashSDK();
-
                 }
-
             }
-
         }
 
         return mInstance;
-
     }
 
     /**
@@ -55,20 +51,32 @@ public class UnitySplashSDK {
      * splash界面
      */
     public void onShowSplash() {
-        if (bgView != null){
+        if (mSplashView != null){
             return;
         }
 
         try {
-            // 设置启动内容，这里的内容可以自定义去修改
-            bgView = new ImageView(UnityPlayer.currentActivity);
-            bgView.setBackgroundColor(Color.parseColor("#E91E63"));
-            bgView.setImageResource(R.drawable.splash);
-            bgView.setScaleType(ImageView.ScaleType.CENTER);
-
             Resources r = mUnityPlayer.currentActivity.getResources();
-            mUnityPlayer.addView(bgView, r.getDisplayMetrics().widthPixels, r.getDisplayMetrics().heightPixels);
 
+            // 父Layout
+            mSplashLayout = new LinearLayout(UnityPlayer.currentActivity);
+            mSplashLayout.setBackgroundColor(Color.parseColor("#000000"));
+            mSplashLayout.setGravity(Gravity.CENTER);
+
+            // Splash动画
+            mSplashView = new ImageView(UnityPlayer.currentActivity);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER;
+            mSplashView.setLayoutParams(params);
+            mSplashView.setBackgroundDrawable(r.getDrawable(R.drawable.splash_ar_video));
+            mSplashView.setScaleType(ImageView.ScaleType.CENTER);
+
+            // 添加View
+            mUnityPlayer.addView(mSplashLayout, r.getDisplayMetrics().widthPixels, r.getDisplayMetrics().heightPixels);
+            mSplashLayout.addView(mSplashView);
+            // 开启动画
+            mSplashAnimation = (AnimationDrawable) mSplashView.getBackground();
+            mSplashAnimation.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,14 +87,15 @@ public class UnitySplashSDK {
      */
     public void onHideSplash() {
         try {
-            if (bgView == null){
+            if (mSplashLayout == null){
                 return;
             }
 
             UnityPlayer.currentActivity.runOnUiThread(new Runnable() {
                 public void run() {
-                    mUnityPlayer.removeView(bgView);
-                    bgView = null;
+                    mSplashAnimation.stop();
+                    mUnityPlayer.removeView(mSplashLayout);
+                    mSplashLayout = null;
                 }
             });
         } catch (Exception e) {
