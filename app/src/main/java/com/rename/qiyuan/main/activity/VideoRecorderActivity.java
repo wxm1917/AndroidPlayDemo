@@ -3,6 +3,7 @@ package com.rename.qiyuan.main.activity;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -49,18 +50,26 @@ public class VideoRecorderActivity extends BaseActivity {
         // setting
         mediaUtils = new MediaUtils(this);
         mediaUtils.setRecorderType(MediaUtils.MEDIA_VIDEO);
-        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            // sd card 不可用
-            return;
+        // 判断系统是否为6.0以下
+        if (Build.VERSION.SDK_INT < 23) {
+            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                // sd card 不可用
+                return;
+            }
+            String targetPath = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.VIDEO_PATH;
+            File targetDirFile = null;
+            if(!FileUtils.isFileExist(targetPath)){
+                targetDirFile = FileUtils.createDirOnSDCard(targetPath);
+            }else{
+                targetDirFile = new File(targetPath + File.separator);
+            }
+            mediaUtils.setTargetDir(targetDirFile);
+        } else {
+            // 申请SD卡读写权限
+            PermissionUtils.requestPermission(VideoRecorderActivity.this, PermissionUtils.CODE_READ_EXTERNAL_STORAGE, mPermissionGrant);
+            PermissionUtils.requestPermission(VideoRecorderActivity.this, PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE, mPermissionGrant);
         }
-        String targetPath = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.VIDEO_PATH;
-        File targetDirFile = null;
-        if(!FileUtils.isFileExist(targetPath)){
-            targetDirFile = FileUtils.createDirOnSDCard(targetPath);
-        }else{
-            targetDirFile = new File(targetPath + File.separator);
-        }
-        mediaUtils.setTargetDir(targetDirFile);
+
 //        mediaUtils.setTargetName(UUID.randomUUID() + ".mp4");
         mediaUtils.setTargetName("1.mp4");
         mediaUtils.setSurfaceView(surfaceView);
@@ -127,10 +136,23 @@ public class VideoRecorderActivity extends BaseActivity {
                     Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
                     break;
                 case PermissionUtils.CODE_READ_EXTERNAL_STORAGE:
-                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_READ_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_READ_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
+
                     break;
                 case PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE:
-                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_WRITE_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(VideoRecorderActivity.this, "Result Permission Grant CODE_WRITE_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
+                    if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                        // sd card 不可用
+                        return;
+                    }
+                    String targetPath = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.VIDEO_PATH;
+                    File targetDirFile = null;
+                    if(!FileUtils.isFileExist(targetPath)){
+                        targetDirFile = FileUtils.createDirOnSDCard(targetPath);
+                    }else{
+                        targetDirFile = new File(targetPath + File.separator);
+                    }
+                    mediaUtils.setTargetDir(targetDirFile);
                     break;
                 default:
                     break;

@@ -184,7 +184,7 @@ public class PermissionUtils {
                     .show();
             permissionGrant.onPermissionGranted(CODE_MULTI_PERMISSION);
         } else {
-            openSettingActivity(activity, "those permission need granted!");
+            openSettingActivity(activity, "请授予权限");
         }
 
     }
@@ -229,7 +229,7 @@ public class PermissionUtils {
     private static void shouldShowRationale(final Activity activity, final int requestCode, final String requestPermission) {
         //TODO
         String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
-        showMessageOKCancel(activity, "Rationale: " + permissionsHint[requestCode], new DialogInterface.OnClickListener() {
+        showMessageOKCancel(activity, "说明: " + permissionsHint[requestCode], new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ActivityCompat.requestPermissions(activity,
