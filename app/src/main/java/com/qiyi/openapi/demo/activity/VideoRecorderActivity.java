@@ -275,7 +275,7 @@ public class VideoRecorderActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             String path = mediaUtils.getTargetFilePath();
-            Toast.makeText(VideoRecorderActivity.this, "文件以保存至：" + path, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(VideoRecorderActivity.this, "文件以保存至：" + path, Toast.LENGTH_SHORT).show();
             send.stopAnim();
 //            recordLayout.setVisibility(View.VISIBLE);
             Intent intent = new Intent(VideoRecorderActivity.this, ARVideoActivity.class);
