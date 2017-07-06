@@ -6,7 +6,7 @@ package com.rename.qiyuan.main.common;
 
 public class Constants {
     // 应用根路径
-    public static final String QYDEMO_ROOT_PATH = "/qydemo";
+    public static final String QYDEMO_ROOT_PATH = "/qiyuan";
     // 视频存放路径
     public static final String VIDEO_PATH = QYDEMO_ROOT_PATH + "/video";
 
