@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.qiyi.openapi.demo"
+        applicationId "com.rename.qiyuan.main"
 //        minSdkVersion 9
         minSdkVersion 14
         targetSdkVersion 25

@@ -25,7 +25,7 @@
             android:text="双击放大"/>
 
         <!-- 视频录制完成后的操作视图 -->
-        <com.qiyi.openapi.demo.view.SendView
+        <com.rename.qiyuan.main.view.SendView
             android:id="@+id/view_send"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -37,7 +37,7 @@
             android:layout_height="match_parent">
 
             <!-- 进度条 -->
-            <com.qiyi.openapi.demo.view.VideoProgressBar
+            <com.rename.qiyuan.main.view.VideoProgressBar
                 android:id="@+id/main_progress_bar"
                 android:layout_width="85dp"
                 android:layout_height="85dp"

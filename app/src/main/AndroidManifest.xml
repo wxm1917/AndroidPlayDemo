@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qiyi.openapi.demo">
+    package="com.rename.qiyuan.main">
 
     <!-- 网络访问需要的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -62,7 +62,7 @@
         android:required="false" />
 
     <application
-        android:name=".ApiDemoApplication"
+        android:name="com.rename.qiyuan.main.ApiDemoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/qiyuan_logo"
         android:label="@string/app_name"
@@ -70,7 +70,7 @@
         android:theme="@style/AppTheme">
         <!-- HomeActivity -->
         <activity
-            android:name=".HomeActivity"
+            android:name="com.rename.qiyuan.main.HomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -84,10 +84,10 @@
             -->
         </activity>
         <!-- 视频播放Activity -->
-        <activity android:name=".activity.PlayerActivity" />
+        <activity android:name="com.rename.qiyuan.main.activity.PlayerActivity" />
         <!-- 主Activity -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.rename.qiyuan.main.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -97,12 +97,12 @@
         </activity>
         <!-- 短视频录制Activity -->
         <activity
-            android:name=".activity.VideoRecorderActivity"
+            android:name="com.rename.qiyuan.main.activity.VideoRecorderActivity"
             android:label="@string/app_name"
             android:theme="@style/FullscreenNoTile"></activity>
         <!-- AR藏视频Activity -->
         <activity
-            android:name=".activity.ARVideoActivity"
+            android:name="com.rename.qiyuan.main.activity.ARVideoActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
             android:label="@string/app_name"
             android:launchMode="singleTask"
